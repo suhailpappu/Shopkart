@@ -1,12 +1,23 @@
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { Button, Card, Col, Image, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "../components/Rating";
-import products from "../products";
+import axios from 'axios'
 
 const ProductScreen = ({ match }) => {
-  const product = products.find((prod) => prod._id === match.params.id);
+  const [product,setProducts] = useState([])
+
+    useEffect(() => {
+        const getProduct = async () => {
+            const res = await axios.get(`/api/products/${match.params.id}`)
+
+            setProducts(res.data)
+        }
+        getProduct()
+    },[])
+
 
     useEffect(()=>{
         window.scrollTo(0,0)
