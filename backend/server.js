@@ -4,19 +4,20 @@ const dotenv = require('dotenv');
 const connectDB = require('../backend/config/db');
 const productRoute = require('./routes/productRoute');
 const {errorHandler,notFound} = require('./middleware/errors');
-
-
+const userRoute = require('../backend/routes/userRoute');
 
 dotenv.config()
 connectDB()
 
 const app = express()
 
+app.use(express.json())
+
 app.use('/api/products',productRoute)
+app.use('/api/users',userRoute)
 
 app.use(notFound)
 app.use(errorHandler)
-
 
 
 const PORT = process.env.PORT || 5000
