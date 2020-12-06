@@ -6,11 +6,15 @@ const productRoute = require('./routes/productRoute');
 const {errorHandler,notFound} = require('./middleware/errors');
 const userRoute = require('../backend/routes/userRoute');
 const orderRoutes = require('../backend/routes/orderRoutes');
+const uploadRoutes = require('../backend/routes/uploadRoutes');
 const Order = require('./models/orderModel');
 const Razorpay = require('razorpay');
 const { updateOrderToPaid } = require('./controllers/orderController');
 const PaytmChecksum = require('./Paytm_Node_Checksum-master/PaytmChecksum')
 const https = require('https');
+const path = require('path');
+const cors = require('cors');
+
 
 dotenv.config()
 connectDB()
@@ -22,6 +26,7 @@ app.use(express.json())
 app.use('/api/products',productRoute)
 app.use('/api/users',userRoute)
 app.use('/api/orders',orderRoutes)
+app.use('/api/upload',uploadRoutes)
 
 
 const razorpay = new Razorpay({
@@ -169,6 +174,9 @@ app.get('/api/callback',(req,res)=>{
 app.use(notFound)
 app.use(errorHandler)
 
+const dirname = path.resolve()
+console.log('name is ',path.join(dirname,'/frontend/public/images'));
+app.use('/frontend/public/images',express.static(path.join(dirname,'/frontend/public/images')))
 
 const PORT = process.env.PORT || 5000
 

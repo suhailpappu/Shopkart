@@ -3,8 +3,10 @@
 # dependencies
 node_modules
 node_modules/
+firebase/
 /.pnp
 .pnp.js
+uploads/
 
 # testing
 /coverage
